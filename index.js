@@ -15,7 +15,7 @@ const PromiseAPI1 = () => {
                 .then(res => res.json())
                 .then(data => {
                     showData(data.posts) 
-                    res("API1 done")
+                    res(true)
                 })
         }, 1000)
     })
@@ -29,7 +29,7 @@ const PromiseAPI2 = () => {
                 .then(res => res.json())
                 .then(data => {
                     showData(data.products) 
-                    res("API2 done")
+                    res(true)
                 })
         }, 2000)
     })
@@ -43,7 +43,7 @@ const PromiseAPI3 = () => {
                 .then(res => res.json())
                 .then(data => {
                     showData(data.todos) 
-                    res("API3 done")
+                    res(true)
                 })
         }, 3000)
     })
@@ -52,18 +52,9 @@ const PromiseAPI3 = () => {
 
 btn.addEventListener("click", ()=>{
     PromiseAPI1()
-        .then((msg1) => {
-        console.log(msg1);
-        return PromiseAPI2();
-      })
-      .then((msg2) => {
-        console.log(msg2);
-        return PromiseAPI3();
-      })
-      .then((msg3) => {
-        console.log(msg3);
-        container.innerHTML += "<h2>✅ All APIs fetched!</h2>";
-      })
+      .then((res1) => res1 && PromiseAPI2())
+      .then((res2) => res2 && PromiseAPI3())
+      .then((res3) => res3 && (container.innerHTML += "<h2>✅ All APIs fetched!</h2>"))
       .catch((error) => {
         container.innerHTML += `<p style="color:red;">❌ Error: ${error}</p>`;
       });
